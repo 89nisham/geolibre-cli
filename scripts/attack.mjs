@@ -1,5 +1,6 @@
 import { execFile } from 'node:child_process';
-import { writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 
 const bin = new URL('../dist/cli.js', import.meta.url).pathname;
 
@@ -56,7 +57,9 @@ const lines = [
   ...results.map((result) => `### ${result.name}\n\nCommand: \`${result.args}\`\n\n\`\`\`text\n${result.sample.trim()}\n\`\`\`\n`),
 ];
 
-await writeFile('/home/jarvis/agent-lab/missions/GEO-001-grok-attack.md', lines.join('\n'));
+const missionDir = process.env.GEO_MISSION_DIR ?? '/home/jarvis/agent-lab/missions';
+await mkdir(missionDir, { recursive: true });
+await writeFile(join(missionDir, 'GEO-001-grok-attack.md'), lines.join('\n'));
 
 if (failed.length) {
   process.exitCode = 1;

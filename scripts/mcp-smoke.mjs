@@ -1,7 +1,8 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { ListToolsResultSchema, CallToolResultSchema } from '@modelcontextprotocol/sdk/types.js';
-import { writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 
 function textFrom(result) {
   return result.content?.find((item) => item.type === 'text')?.text ?? '';
@@ -27,7 +28,7 @@ const client = new Client({ name: 'geolibre-smoke-client', version: '0.1.0' });
 const transport = new StdioClientTransport({
   command: 'node',
   args: ['dist/mcp/server.js'],
-  cwd: '/home/jarvis/agent-lab/geolibre-cli',
+  cwd: process.cwd(),
   stderr: 'pipe',
 });
 
@@ -102,5 +103,7 @@ const transcript = [
   '',
 ];
 
-await writeFile('/home/jarvis/agent-lab/missions/GEO-001-agent-smoke-test.md', transcript.join('\n'));
+const missionDir = process.env.GEO_MISSION_DIR ?? '/home/jarvis/agent-lab/missions';
+await mkdir(missionDir, { recursive: true });
+await writeFile(join(missionDir, 'GEO-001-agent-smoke-test.md'), transcript.join('\n'));
 console.log(transcript.join('\n'));

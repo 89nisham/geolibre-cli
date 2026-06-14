@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Audit
+        run: npm audit --audit-level=high
+
+      - name: Build
+        run: npm run build
+
+      - name: CLI smoke tests
+        run: npm test
+
+      - name: Attack harness
+        run: node scripts/attack.mjs
+        env:
+          GEO_MISSION_DIR: /tmp/geolibre-missions
+
+      - name: MCP smoke test
+        run: node scripts/mcp-smoke.mjs
+        env:
+          GEO_MISSION_DIR: /tmp/geolibre-missions

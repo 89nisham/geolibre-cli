@@ -73,10 +73,21 @@ Tools exposed:
 ## Validation
 
 ```bash
+npm audit --audit-level=high
 npm test
 node scripts/attack.mjs
 node scripts/mcp-smoke.mjs
 ```
+
+GitHub CI runs the same audit, build, CLI smoke, attack harness, and MCP smoke checks.
+
+## Data Notes
+
+The public `countries.parquet` example is an upstream dataset and may change over time. During GEO-001 validation on 2026-06-14 it returned 176 observed features. Tests assert successful structured output and byte limits rather than a fixed feature count.
+
+## Security Notes
+
+`npm audit` is clean at the high-severity gate. The project currently uses an npm override to force `tar@7.5.16` because the current `duckdb` install-time dependency chain still pulls an older vulnerable `tar` through `node-gyp`. See `docs/security-audit.md`.
 
 ## Limitations
 
@@ -85,4 +96,3 @@ node scripts/mcp-smoke.mjs
 - Shapefile support depends on DuckDB Spatial/GDAL behavior and is not yet first-class.
 - Raster operations are deferred.
 - Vector operations beyond the buffer demo are deferred.
-
