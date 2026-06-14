@@ -13,6 +13,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/cli.ts",
+    "test:focused": "npm run build && node --test test/*.test.mjs",
     "test": "npm run build && node dist/cli.js inspect test/fixtures/points.geojson && node dist/cli.js sql \"SELECT * FROM test/fixtures/data.csv LIMIT 2\" && node dist/cli.js convert test/fixtures/points.geojson --to parquet --output /tmp/geolibre-points.parquet"
   },
   "keywords": [],
