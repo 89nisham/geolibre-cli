@@ -1,0 +1,36 @@
+{
+  "name": "geolibre-cli",
+  "version": "0.1.0",
+  "description": "Agent-native geospatial CLI and MCP server",
+  "main": "dist/cli.js",
+  "bin": {
+    "geolibre": "./dist/cli.js",
+    "geolibre-mcp": "./dist/mcp/server.js"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "npm run build && node dist/cli.js inspect test/fixtures/points.geojson && node dist/cli.js sql \"SELECT * FROM test/fixtures/data.csv LIMIT 2\" && node dist/cli.js convert test/fixtures/points.geojson --to parquet --output /tmp/geolibre-points.parquet"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@turf/buffer": "^7.3.5",
+    "@turf/helpers": "^7.3.5",
+    "chalk": "^5.6.2",
+    "commander": "^15.0.0",
+    "duckdb": "^1.4.4",
+    "ora": "^9.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}

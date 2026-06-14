@@ -1,0 +1,10 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {"type": "Feature", "properties": {"id": 1, "name": "Dubai"}, "geometry": {"type": "Point", "coordinates": [55.2708, 25.2048]}},
+    {"type": "Feature", "properties": {"id": 2, "name": "Riyadh"}, "geometry": {"type": "Point", "coordinates": [46.6753, 24.7136]}},
+    {"type": "Feature", "properties": {"id": 3, "name": "Doha"}, "geometry": {"type": "Point", "coordinates": [51.531, 25.2854]}},
+    {"type": "Feature", "properties": {"id": 4, "name": "Muscat"}, "geometry": {"type": "Point", "coordinates": [58.4059, 23.588]}},
+    {"type": "Feature", "properties": {"id": 5, "name": "Manama"}, "geometry": {"type": "Point", "coordinates": [50.586, 26.2285]}}
+  ]
+}
